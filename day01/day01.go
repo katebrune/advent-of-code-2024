@@ -1,35 +1,34 @@
-package main
+package day01
 
 import(
 	"fmt"
-	"os"
 	"strings"
 	"strconv"
 	"sort"
+	"advent-of-code-2024/util"
 )
 
-func main() {
-	data, err := readFileToString("data.txt")
+func ProcessDifferences(fileName string) {
+	data, err := util.ReadFileToString(fileName)
 	if err != nil {
-		fmt.Print(err)
+		fmt.Println(err)
 	}
 	twoLists := parseStringToTwoLists(data)
 	orderedLists := orderTwoLists(twoLists)
 	differences := getDifferencesOfTwoLists(orderedLists)
 	sum := sumList(differences)
 	fmt.Printf("differences: %d\n", sum)
-	similarities := getSimilaritiesOfTwoLists(twoLists)
-	similaritySum := sumList(similarities)
-	fmt.Printf("similarities: %d\n", similaritySum)
 }
 
-func readFileToString(filename string) (string, error) {
-	bytes, err := os.ReadFile(filename)
+func ProcessSimilarities(fileName string) {
+	data, err := util.ReadFileToString(fileName)
 	if err != nil {
-		return "", err
+		fmt.Println(err)
 	}
-	str := string(bytes)
-    return str, nil
+	twoLists := parseStringToTwoLists(data)
+	similarities := getSimilaritiesOfTwoLists(twoLists)
+	sum := sumList(similarities)
+	fmt.Printf("similarities: %d\n", sum)
 }
 
 type TwoLists struct {
@@ -88,16 +87,6 @@ func getDifferencesOfTwoLists(lists TwoLists) []int {
 	return differences
 }
 
-func sumList(list []int) int {
-	sum := 0
-
-	for _, num := range list {
-		sum += num
-	}
-
-	return sum
-}
-
 func getSimilaritiesOfTwoLists(lists TwoLists) []int {
 	similarities := []int{}
 
@@ -111,4 +100,14 @@ func getSimilaritiesOfTwoLists(lists TwoLists) []int {
 		similarities = append(similarities, count * numberA)
 	}
 	return similarities
+}
+
+func sumList(list []int) int {
+	sum := 0
+
+	for _, num := range list {
+		sum += num
+	}
+
+	return sum
 }
